@@ -165,4 +165,4 @@ class TestAuthor:
         assert len(author_1.topic_areas()) == 2
         assert "Fashion" in author_1.topic_areas()
         assert "Architecture" in author_1.topic_areas()
-        assert author_2.topic_areas() is None
+        assert not author_2.topic_areas()
