@@ -37,30 +37,61 @@ class Author:
 
 
     def articles(self):
-        pass
+        return [article for article in Article.all if article.author == self ]
 
     def magazines(self):
-        pass
+        return list({article.magazine for article in self.articles()})
 
     def add_article(self, magazine, title):
-        pass
+        return Article(self, magazine, title)
 
     def topic_areas(self):
-        pass
+        return list({magazine.category for magazine in self.magazines()})
 
 class Magazine:
+    all = []
+
     def __init__(self, name, category):
+        if not isinstance(name, str):
+            raise ValueError("Name must be a string.")
+        if not (2 <= len(name) <= 16):
+            raise ValueError("Name length must be between 2 and 16 characters.")
+        if not isinstance(category, str):
+            raise ValueError("Category must be a string.")
+        if not category:
+            raise ValueError("Category must not be empty.")
         self.name = name
         self.category = category
+        Magazine.all.append(self)
+
+    @property
+    def category(self):
+        return self._category
+
+    @category.setter
+    def category(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Category must be a string.")
+        if not value:
+            raise ValueError("Category must not be empty.")
+        self._category = value
 
     def articles(self):
-        pass
+        return [article for article in Article.all if article.magazine == self]
+
 
     def contributors(self):
-        pass
+        return list({article.author for article in self.articles()})
 
     def article_titles(self):
-        pass
+        return [article.title for article in self.articles()]
 
     def contributing_authors(self):
-        pass
+        authors = [article.author for article in self.articles()]
+        return [author for author in set(authors) if authors.count(author) > 2]
+    
+    @classmethod
+    def top_publisher(cls):
+        if not Article.all:
+            return None
+        return max(cls.all, key=lambda magazine: len(magazine.articles()))
