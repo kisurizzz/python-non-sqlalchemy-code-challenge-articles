@@ -63,6 +63,18 @@ class Magazine:
         self.name = name
         self.category = category
         Magazine.all.append(self)
+    
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        if not isinstance(value, str):
+            raise ValueError("Name must be a string.")
+        if not (2 <= len(value) <= 16):
+            raise ValueError("Name length must be between 2 and 16 characters.")
+        self._name = value
 
     @property
     def category(self):

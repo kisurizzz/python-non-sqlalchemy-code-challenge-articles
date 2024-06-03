@@ -36,26 +36,16 @@ class TestMagazine:
             Magazine(2, "Numbers")
 
     def test_name_len(self):
-        """magazine name is between 2 and 16 characters, inclusive"""
+        """Magazine name is between 2 and 16 characters, inclusive"""
         magazine_1 = Magazine("Vogue", "Fashion")
         magazine_2 = Magazine("AD", "Architecture")
 
         assert 2 <= len(magazine_1.name) <= 16
         assert 2 <= len(magazine_2.name) <= 16
 
-        # comment out the next two lines if using Exceptions
-        # magazine_1.name = "New Yorker Plus X"
-        # assert magazine_1.name == "Vogue"
-
-        # comment out the next two lines if using Exceptions
-        # magazine_2.name = "A"
-        # assert magazine_2.name == "AD"
-
-        # uncomment the next two lines if using Exceptions
         with pytest.raises(ValueError):
             magazine_1.name = "New Yorker Plus X"
 
-        # uncomment the next two lines if using Exceptions
         with pytest.raises(ValueError):
             magazine_2.name = "A"
 
